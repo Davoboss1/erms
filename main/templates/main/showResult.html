@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-learning. A learning platform for students</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <style media="print">
+      .navbar{
+        display: none;
+      }
+
+      .exclude-print{
+        display: none !important;
+      }
+      html, body {
+      height:100vh;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden;
+    }
+    </style>
+
+<body>
+    <!-- page nav bar -->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container-fluid justify-content-center">
+            <a class="navbar-brand" href="{% url 'home' %}">E-Learning</a>
+        </div>
+    </nav>
+
+    <div class="container-fluid" id="resultArea">
+        <h3 class="my-3 text-center"> Students Result</h3>
+
+        <div class="d-flex justify-content-center flex-wrap">
+          <div class="resultText">
+            <h4><u>Student Name</u></h4>
+
+            <h5>{{student.name}}</h5>
+          </div>
+          <div class="resultText" >
+            <h5><u>Admission no</u></h5>
+
+            <h5>{{student.admission_no}}</h5>
+          </div>
+          <div class="flex-break"></div>
+
+          <div class="resultText">
+            <h5><u>Department</u></h5>
+
+            <h5>{{student.department.name}}</h5>
+          </div>
+          <div class="flex-break"></div>
+        </div>
+        <div class="d-flex justify-content-between exclude-print" >
+          <button class="btn btn-success align-self-end px-3" onclick="print()">Print</button>
+        </div>
+
+          <div class="table-responsive">
+          <table class="table table-striped mt-3" >
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Course Name</th>
+                <th scope="col">Department</th>
+                <th scope="col">Semester</th>
+                <th scope="col">Test Score</th>
+                <th scope="col">Exam Score</th>
+                <th scope="col">Total Score</th>
+              </tr>
+            </thead>
+            <tbody style="vertical-align: middle;">
+              {% for result in results %}
+              <tr>
+                  <th scope="row">{{forloop.counter}}</th>
+                <th>{{result.course.name}}</th>
+                <th>{{result.course.department.name}}</th>
+                <td>{{result.course.semester}}</td>
+                <td>{{result.test_score}}</td>
+                <td>{{result.exam_score}}</td>
+                <td>{{result.total_score}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          </div>
+    </div>
+</body>
+
+</html>
